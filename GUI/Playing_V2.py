@@ -11,9 +11,16 @@ from kivy.uix.button import Button
 Window.size = (1024, 600)
 
 class Navigation(BoxLayout):
-    pass
+    def shuffle(self):
+        if self.ids.shuffle.text == "Shuffle on":
+            self.ids.shuffle.text = "Shuffle off"
+        else:
+            self.ids.shuffle.text = "Shuffle on"
+
 
 class Test(MDApp): 
+    def play(self):
+        print("play") 
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "LightBlue"
@@ -64,7 +71,9 @@ class Test(MDApp):
                             icon: 'play-circle'
                             user_font_size: "50sp"
                             pos: 700, 175
-
+                            on_press: 
+                                if self.icon == "play-circle": app.play(); self.icon = "pause-circle"
+                                else: self.icon = "play-circle"
                             
 
                             
@@ -80,23 +89,32 @@ class Test(MDApp):
                             icon: "heart-outline"
                             user_font_size: "40sp"
                             pos: 705, 300
+                            on_press:
+                                if self.icon == "heart-outline" : self.icon = "heart"
+                                else: self.icon = "heart-outline"
                     
                     MDFloatLayout:
                         MDIconButton:
                             icon: "repeat"
                             user_font_size: "40sp"
                             pos: 555, 300
+                            on_press:
+                                if self.icon == "repeat" : self.icon = "repeat-off"
+                                else: self.icon = "repeat"
                     
                     MDFloatLayout:
                         MDLabel:
+                            id: shuffle
                             text: "Shuffle on"
                             font_size: "10sp"
                             pos: 865, 280
                         MDIconButton:
+                            id: shuffle_icon
                             icon: "shuffle"
                             user_font_size: "40sp"
                             pos: 855, 300
-                            
+                            on_press: root.shuffle()         
+
             ##Middle playlist icon in navigation bar
             MDBottomNavigationItem:
                 name: 'screen 2'
